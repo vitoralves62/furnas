@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SingUP from "./pages/SingUp/singUpForm.js";
 
 function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<h1>Hello World</h1>} />  
+        <Route path="/" element={<SingUP />}/>  
       </Routes>
     </BrowserRouter>
   );
