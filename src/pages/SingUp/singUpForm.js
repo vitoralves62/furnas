@@ -1,8 +1,37 @@
 import styles from "./singUp.module.css";
+import React, { useCallback, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
-export default function(){
+export default function SingUpForm(){
     const { control} = useForm();
+    const navigate = useNavigate();
+    const [singUpError, setSingUpError] = useState(null);
+
+    const port = "porta";
+    const route = "rota";
+
+    const onSubmit = useCallback(async (data) =>{
+        try {
+            const response = await fetch(`https://${route}:${port}/api/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type':'application/json'
+                },
+                body: JSON.stringfy(data),
+            });
+            const responseData = await response.json();
+
+            if(response.ok){
+                navigate('/Login')
+            }else{
+                
+            }
+
+        } catch (error) {
+            console.error('Erro no cadastro: ', error);
+        }
+    }, [navigate])
 
     return(
         <div>
@@ -15,7 +44,7 @@ export default function(){
                                 <input
                                     {...field}
                                     type="name"
-                                    placeholder="Razão Social"
+                                    placeholder="Usuário"
                                     className={styles.name}
                                 />
                             )}
@@ -83,6 +112,16 @@ export default function(){
                             name="password"
                         />
                     </label>
+                    <br/>
+                    <button
+                        type="submit"
+                        disabled={false}
+                    >
+                        Cadastrar
+                    </button>
+                </div>
+                <div>
+                    <a href="/login">Já possuí uma conta? Fazer login</a>
                 </div>
             </form>
         </div>
