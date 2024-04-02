@@ -5,27 +5,24 @@ body {
     background-color: #f0f0f0;
   }
   
-  html, body {
-    height: 100%;
-    margin: 0;
-  }
-  
   .photo {
     width: 5%;
   }
   
   .container {
     display: flex;
-    justify-content: center; 
-    align-items: center; 
-    height: 100%;
-  }
-  
-  .loginContainer {
-    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    width: 100vw;
+  }
+  
+  .loginContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
   }
   
   .loginForm {
@@ -64,3 +61,7 @@ body {
     background-color: #0056b3;
   }
   
+
+  .eyeIcon{
+    position: absolute;
+  }

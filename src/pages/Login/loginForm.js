@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Logo from "../../assets/logo.png";
 import styles from "./login.module.css";
+import Background from '../../components/Background/bg.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'; 
 
@@ -73,7 +74,8 @@ function Login() {
   };
 
   return (
-    <div className={styles.container}> 
+    <main>
+      <Background/> 
       <img src={Logo} alt="Logo Furnas"  className={styles.photo} />
       <div className={styles.loginContainer}> 
         <div className={styles.loginForm}>
@@ -99,7 +101,7 @@ function Login() {
                 <FontAwesomeIcon
                   icon={mostrarSenha ? faEyeSlash : true} // Alterna entre os ícones de olho aberto e fechado
                   onClick={toggleMostrarSenha} // Chama a função para alternar a visibilidade da senha
-                  //className={styles.eyeIcon}
+                  className={styles.eyeIcon}
                 />
               </div>
               {senhaContemEspacos && (
@@ -113,7 +115,7 @@ function Login() {
           </form>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
