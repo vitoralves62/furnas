@@ -21,14 +21,14 @@ body {
     height: 100%;
   }
   
-  .login-container {
+  .loginContainer {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
   }
   
-  .login-form {
+  .loginForm {
     background-color: #fff; 
     padding: 40px;
     border-radius: 10px;

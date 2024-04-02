@@ -36,7 +36,8 @@ export default function SingUpForm(){
     return(
         <div>
             <h1>Registre-se</h1>
-            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+            {/* <form className={styles.form} onSubmit={handleSubmit(onSubmit)}> */}
+            <form className={styles.form} >
                 <div>
                     <label>
                         <Controller

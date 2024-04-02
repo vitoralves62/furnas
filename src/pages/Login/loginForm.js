@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import Logo from "../../assets/logo.png";
-import './styles.css'; 
+import styles from "./login.module.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'; 
 
-function App() {
+function Login() {
   const [CNPJ, setCNPJ] = useState('');
   const [Senha, setSenha] = useState('');
   const [mostrarSenha, setMostrarSenha] = useState(false); 
@@ -73,10 +73,10 @@ function App() {
   };
 
   return (
-    <div className="container"> {/* Aplica a classe container */}
-      <img src={Logo} alt="Logo Furnas"  className="photo" />
-      <div className="login-container"> {/* Aplica a classe login-container */}
-        <div className="login-form"> {/* Aplica a classe login-form */}
+    <div className={styles.container}> 
+      <img src={Logo} alt="Logo Furnas"  className={styles.photo} />
+      <div className={styles.loginContainer}> 
+        <div className={styles.loginForm}>
           <h2>Login</h2>
           <form>
             <div>
@@ -90,7 +90,7 @@ function App() {
             </div>
             <div>
               <label>Senha:</label>
-              <div className="password-input-container">
+              <div className={styles.passwordInpuContainer}>
                 <input
                   type={mostrarSenha ? "text" : "password"} // Alterna entre exibir e ocultar a senha
                   value={Senha}
@@ -99,7 +99,7 @@ function App() {
                 <FontAwesomeIcon
                   icon={mostrarSenha ? faEyeSlash : true} // Alterna entre os ícones de olho aberto e fechado
                   onClick={toggleMostrarSenha} // Chama a função para alternar a visibilidade da senha
-                  className="eye-icon"
+                  //className={styles.eyeIcon}
                 />
               </div>
               {senhaContemEspacos && (
@@ -117,4 +117,4 @@ function App() {
   );
 }
 
-export default App;
+export default Login;
