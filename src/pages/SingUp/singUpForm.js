@@ -20,7 +20,7 @@ export default function SingUpForm(){
                 },
                 body: JSON.stringfy(data),
             });
-            const responseData = await response.json();
+            //const responseData = await response.json();
 
             if(response.ok){
                 navigate('/Login')
@@ -36,7 +36,7 @@ export default function SingUpForm(){
     return(
         <div>
             <h1>Registre-se</h1>
-            <form >
+            <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label>
                         <Controller
