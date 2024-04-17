@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Logo from "../../assets/logo.png";
-import styles from "./login.module.css";
-import Background from '../../components/Background/bg.js';
+import styles from './login.module.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'; 
+
 
 function Login() {
   const [CNPJ, setCNPJ] = useState('');
@@ -74,12 +74,11 @@ function Login() {
   };
 
   return (
-    <main>
-      <Background/> 
+    <div className={styles.container}> {/* Aplica a classe container */}
       <img src={Logo} alt="Logo Furnas"  className={styles.photo} />
-      <div className={styles.loginContainer}> 
-        <div className={styles.loginForm}>
-          <h2>Login</h2>
+      <div className={styles.loginContainer}> {/* Aplica a classe login-container */}
+        <div className={styles.loginForm}> {/* Aplica a classe login-form */}
+          {/*<h2>Login</h2>*/}
           <form>
             <div>
               <label>CNPJ:</label>
@@ -92,7 +91,7 @@ function Login() {
             </div>
             <div>
               <label>Senha:</label>
-              <div className={styles.passwordInpuContainer}>
+              <div className={styles.passwordInputContainer}>
                 <input
                   type={mostrarSenha ? "text" : "password"} // Alterna entre exibir e ocultar a senha
                   value={Senha}
@@ -115,8 +114,9 @@ function Login() {
           </form>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
+
 
 export default Login;
