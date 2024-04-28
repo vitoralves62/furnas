@@ -1,40 +1,58 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Logo from "../../assets/logo.png";
 import styles from './login.module.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'; 
-
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [CNPJ, setCNPJ] = useState('');
-  const [Senha, setSenha] = useState('');
-  const [mostrarSenha, setMostrarSenha] = useState(false); 
-  const [senhaContemEspacos, setSenhaContemEspacos] = useState(false); 
+  const [password, setpassword] = useState('');
+  const [ShowPassaword, setShowPassaword] = useState(false); 
+  const [passwordHaveSpaces, setpasswordHaveSpaces] = useState(false); 
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
+  const port = "porta";
+  const route = "rota";
+
+  const onSubmit = useCallback(async (data) => {
     
-    if (CNPJ === "" || Senha === "") {
+    if (CNPJ === "" || password === "") {
       alert("Por favor, preencha todos os campos.");
       return false; 
     }
-
     
-    if (senhaContemEspacos) {
-      alert("A senha não pode conter espaços em branco.");
+    if (passwordHaveSpaces) {
+      alert("A password não pode conter espaços em branco.");
       return false; 
     }
+    try {
+      const response = await fetch(`https://${route}:${port}/api/createUser`, {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringfy(data),
+      });
+      const responseData = await response.json();
 
-    // Se tudo estiver preenchido corretamente, permite o envio do formulário
-    console.log('CNPJ:', CNPJ);
-    console.log('Senha:', Senha);
+      if(response.ok){
+          navigate('/Home')
+      }else{
+          
+      }
+
+    } catch (error) {
+      
+    }
     return true;
+  }, [navigate]);
+
+  const toggleShowPassaword = () => {
+    setShowPassaword(!ShowPassaword); // Inverte o estado de ShowPassaword
   };
 
-  const toggleMostrarSenha = () => {
-    setMostrarSenha(!mostrarSenha); // Inverte o estado de mostrarSenha
-  };
-
-  const formatarCNPJ = (cnpj) => {
+  const formatCNPJ = (cnpj) => {
     // Remove qualquer caractere não numérico
     cnpj = cnpj.replace(/[^\d]/g, '');
 
@@ -49,28 +67,28 @@ function Login() {
 
   const handleChangeCNPJ = (e) => {
     
-    let novoCNPJ = e.target.value;
+    let newCNPJ = e.target.value;
 
     
-    novoCNPJ = formatarCNPJ(novoCNPJ);
+    newCNPJ = formatCNPJ(newCNPJ);
 
     
-    setCNPJ(novoCNPJ);
+    setCNPJ(newCNPJ);
   };
 
-  const handleChangeSenha = (e) => {
+  const handleChangepassword = (e) => {
     
-    let novaSenha = e.target.value;
+    let newpassword = e.target.value;
 
    
-    if (novaSenha.includes(' ')) {
-      setSenhaContemEspacos(true);
+    if (newpassword.includes(' ')) {
+      setpasswordHaveSpaces(true);
     } else {
-      setSenhaContemEspacos(false);
+      setpasswordHaveSpaces(false);
     }
 
     
-    setSenha(novaSenha);
+    setpassword(newpassword);
   };
 
   return (
@@ -93,22 +111,22 @@ function Login() {
               <label>Senha:</label>
               <div className={styles.passwordInputContainer}>
                 <input
-                  type={mostrarSenha ? "text" : "password"} // Alterna entre exibir e ocultar a senha
-                  value={Senha}
-                  onChange={handleChangeSenha} // Utiliza a função para remover espaços ao alterar a senha
+                  type={ShowPassaword ? "text" : "password"} // Alterna entre exibir e ocultar a password
+                  value={password}
+                  onChange={handleChangepassword} // Utiliza a função para remover espaços ao alterar a password
                 />
                 <FontAwesomeIcon
-                  icon={mostrarSenha ? faEyeSlash : true} // Alterna entre os ícones de olho aberto e fechado
-                  onClick={toggleMostrarSenha} // Chama a função para alternar a visibilidade da senha
+                  icon={ShowPassaword ? faEyeSlash : true} // Alterna entre os ícones de olho aberto e fechado
+                  onClick={toggleShowPassaword} // Chama a função para alternar a visibilidade da password
                   className={styles.eyeIcon}
                 />
               </div>
-              {senhaContemEspacos && (
-                <span style={{ color: 'red' }}>A senha não pode conter espaços em branco.</span>
+              {passwordHaveSpaces && (
+                <span style={{ color: 'red' }}>A password não pode conter espaços em branco.</span>
               )}
             </div>
-            <button type="button" onClick={handleLogin}>
-              Login
+            <button type="button" onClick={onSubmit}>
+              Entrar
             </button>
             <p>Não possui cadastro? <a href="/cadastro">Clique aqui</a> para se cadastrar.</p>
           </form>

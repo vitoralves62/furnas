@@ -2,18 +2,22 @@ import styles from "./singUp.module.css";
 import React, { useCallback, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'; 
+
 
 export default function SingUpForm(){
     const { control} = useForm();
     const navigate = useNavigate();
     const [singUpError, setSingUpError] = useState(null);
+    const [ShowPassaword, setShowPassaword] = useState(false); 
 
     const port = "porta";
     const route = "rota";
 
     const onSubmit = useCallback(async (data) =>{
         try {
-            const response = await fetch(`https://${route}:${port}/api/login`, {
+            const response = await fetch(`https://${route}:${port}/api/createUser`, {
                 method: 'POST',
                 headers: {
                     'Content-Type':'application/json'
@@ -31,7 +35,11 @@ export default function SingUpForm(){
         } catch (error) {
             console.error('Erro no cadastro: ', error);
         }
-    }, [navigate])
+    }, [navigate]);
+
+    const toggleShowPassaword = () => {
+        setShowPassaword(!ShowPassaword); // Inverte o estado de ShowPassaword
+      };
 
     return(
         <div>
@@ -96,6 +104,11 @@ export default function SingUpForm(){
                             )}
                             control={control}
                             name="password"
+                        />
+                        <FontAwesomeIcon
+                            icon={ShowPassaword ? faEyeSlash : true} // Alterna entre os ícones de olho aberto e fechado
+                            onClick={toggleShowPassaword} // Chama a função para alternar a visibilidade da senha
+                            className={styles.eyeIcon}
                         />
                     </label>
                     <br/>
