@@ -7,7 +7,7 @@ import { faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function SingUpForm(){
-    const { control} = useForm();
+    const {control} = useForm();
     const navigate = useNavigate();
     const [singUpError, setSingUpError] = useState(null);
     const [ShowPassaword, setShowPassaword] = useState(false); 
