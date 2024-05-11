@@ -52,13 +52,13 @@ export default function SingUpForm(){
                             render={({field}) =>(
                                 <input
                                     {...field}
-                                    type="name"
-                                    placeholder="Usuário"
+                                    type="CNPJ"
+                                    placeholder="CNPJ"
                                     className={styles.name}
                                 />
                             )}
                             control={control}
-                            name="name"
+                            name="CNPJ"
                         />
                     </label>
                     <br/>
@@ -74,21 +74,6 @@ export default function SingUpForm(){
                             )}
                             control={control}
                             name="email"
-                        />
-                    </label>
-                    <br/>
-                    <label>
-                        <Controller
-                            render={({field}) =>(
-                                <input
-                                    {...field}
-                                    type="email"
-                                    placeholder="Confirmar email"
-                                    className={styles.name}
-                                />
-                            )}
-                            control={control}
-                            name="email2"
                         />
                     </label>
                     <br/>
@@ -117,13 +102,13 @@ export default function SingUpForm(){
                             render={({field}) =>(
                                 <input
                                     {...field}
-                                    type="password"
+                                    type="password-confirm"
                                     placeholder="Confirmar Senha"
                                     className={styles.name}
                                 />
                             )}
                             control={control}
-                            name="password"
+                            name="password-confirm"
                         />
                     </label>
                     <br/>
