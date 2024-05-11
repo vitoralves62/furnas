@@ -1,42 +1,63 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from "react";
 import Logo from "../../assets/logo.png";
-import styles from './login.module.css'; 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEyeSlash } from '@fortawesome/free-solid-svg-icons'; 
-
+import styles from "./login.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
+import { useForm, Controller } from 'react-hook-form';
 
 function Login() {
-  const [CNPJ, setCNPJ] = useState('');
-  const [Senha, setSenha] = useState('');
-  const [mostrarSenha, setMostrarSenha] = useState(false); 
-  const [senhaContemEspacos, setSenhaContemEspacos] = useState(false); 
+  const {control} = useForm();
+  const [CNPJ, setCNPJ] = useState("");
+  const [password, setpassword] = useState("");
+  const [ShowPassaword, setShowPassaword] = useState(false);
+  const [passwordHaveSpaces, setpasswordHaveSpaces] = useState(false);
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    
-    if (CNPJ === "" || Senha === "") {
-      alert("Por favor, preencha todos os campos.");
-      return false; 
-    }
+  const port = "porta";
+  const route = "rota";
 
-    
-    if (senhaContemEspacos) {
-      alert("A senha não pode conter espaços em branco.");
-      return false; 
-    }
+  const onSubmit = useCallback(
+    async (data) => {
+      // if (CNPJ === "" || password === "") {
+      //   alert("Por favor, preencha todos os campos.");
+      //   return false;
+      // }
 
-    // Se tudo estiver preenchido corretamente, permite o envio do formulário
-    console.log('CNPJ:', CNPJ);
-    console.log('Senha:', Senha);
-    return true;
+      // if (passwordHaveSpaces) {
+      //   alert("A password não pode conter espaços em branco.");
+      //   return false;
+      // }
+      try {
+        const response = await fetch(
+          `https://${route}:${port}/api/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringfy(data),
+          }
+        );
+        const responseData = await response.json();
+
+        if (response.ok) {
+          navigate("/Home");
+        } else {
+        }
+      } catch (error) {}
+      return true;
+    },
+    [navigate]
+  );
+
+  const toggleShowPassaword = () => {
+    setShowPassaword(!ShowPassaword); // Inverte o estado de ShowPassaword
   };
 
-  const toggleMostrarSenha = () => {
-    setMostrarSenha(!mostrarSenha); // Inverte o estado de mostrarSenha
-  };
-
-  const formatarCNPJ = (cnpj) => {
+  const formatCNPJ = (cnpj) => {
     // Remove qualquer caractere não numérico
-    cnpj = cnpj.replace(/[^\d]/g, '');
+    cnpj = cnpj.replace(/[^\d]/g, "");
 
     // Limita a 14 caracteres
     if (cnpj.length > 14) {
@@ -44,79 +65,113 @@ function Login() {
     }
 
     // Adiciona pontos, barras e traços conforme o formato do CNPJ
-    return cnpj.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/, '$1.$2.$3/$4-$5');
+    return cnpj.replace(
+      /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+      "$1.$2.$3/$4-$5"
+    );
   };
 
   const handleChangeCNPJ = (e) => {
-    
-    let novoCNPJ = e.target.value;
+    let newCNPJ = e.target.value;
 
-    
-    novoCNPJ = formatarCNPJ(novoCNPJ);
+    newCNPJ = formatCNPJ(newCNPJ);
 
-    
-    setCNPJ(novoCNPJ);
+    setCNPJ(newCNPJ);
   };
 
-  const handleChangeSenha = (e) => {
-    
-    let novaSenha = e.target.value;
+  const handleChangepassword = (e) => {
+    let newpassword = e.target.value;
 
-   
-    if (novaSenha.includes(' ')) {
-      setSenhaContemEspacos(true);
+    if (newpassword.includes(" ")) {
+      setpasswordHaveSpaces(true);
     } else {
-      setSenhaContemEspacos(false);
+      setpasswordHaveSpaces(false);
     }
 
-    
-    setSenha(novaSenha);
+    setpassword(newpassword);
   };
 
   return (
-    <div className={styles.container}> {/* Aplica a classe container */}
-      <img src={Logo} alt="Logo Furnas"  className={styles.photo} />
-      <div className={styles.loginContainer}> {/* Aplica a classe login-container */}
-        <div className={styles.loginForm}> {/* Aplica a classe login-form */}
+    <div className={styles.container}>
+      {" "}
+      {/* Aplica a classe container */}
+      <img src={Logo} alt="Logo Furnas" className={styles.photo} />
+      <div className={styles.loginContainer}>
+        {" "}
+        {/* Aplica a classe login-container */}
+        <div className={styles.loginForm}>
+          {" "}
+          {/* Aplica a classe login-form */}
           {/*<h2>Login</h2>*/}
           <form>
             <div>
-              <label>CNPJ:</label>
-              <input
-                type="text"
-                value={CNPJ}
-                onChange={handleChangeCNPJ} // Utiliza a função de formatação ao alterar o CNPJ
-                maxLength={14} // Define o máximo de caracteres permitidos
-              />
+              <label>
+                CNPJ:
+                <Controller
+                  render={({field}) => (
+                    <input
+                      {...field}
+                      type="text"
+                      value={CNPJ}
+                      onChange={handleChangeCNPJ} // Utiliza a função de formatação ao alterar o CNPJ
+                      maxLength={14} // Define o máximo de caracteres permitidos
+                    />
+                  )}
+                  control={control}
+                  name="CNPJ"
+                  rules={{ 
+                    required: 'Campo obrigatório',
+                    pattern: {
+                      value: /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                      message: 'CNPJ inválido'
+                    }
+                   }}
+                />
+              </label>
             </div>
             <div>
-              <label>Senha:</label>
               <div className={styles.passwordInputContainer}>
-                <input
-                  type={mostrarSenha ? "text" : "password"} // Alterna entre exibir e ocultar a senha
-                  value={Senha}
-                  onChange={handleChangeSenha} // Utiliza a função para remover espaços ao alterar a senha
-                />
-                <FontAwesomeIcon
-                  icon={mostrarSenha ? faEyeSlash : true} // Alterna entre os ícones de olho aberto e fechado
-                  onClick={toggleMostrarSenha} // Chama a função para alternar a visibilidade da senha
-                  className={styles.eyeIcon}
-                />
+                <label>Senha:
+                  <Controller
+                    render={({ field }) => (
+                      <input
+                        {...field}
+                        type={ShowPassaword ? "text" : "password"} // Alterna entre exibir e ocultar a password
+                        value={password}
+                        onChange={handleChangepassword} // Utiliza a função para remover espaços ao alterar a password
+                      />
+                    )}
+                    control={control}
+                    name="password"
+                    rules={{ 
+                      required: "Campo obrigatório"
+                     }}
+                  />
+                  <FontAwesomeIcon
+                    icon={ShowPassaword ? faEyeSlash : true} // Alterna entre os ícones de olho aberto e fechado
+                    onClick={toggleShowPassaword} // Chama a função para alternar a visibilidade da password
+                    className={styles.eyeIcon}
+                  />
+                </label>
               </div>
-              {senhaContemEspacos && (
-                <span style={{ color: 'red' }}>A senha não pode conter espaços em branco.</span>
+              {passwordHaveSpaces && (
+                <span style={{ color: "red" }}>
+                  A password não pode conter espaços em branco.
+                </span>
               )}
             </div>
-            <button type="button" onClick={handleLogin}>
-              Login
+            <button type="submit" onClick={onSubmit}>
+              Entrar
             </button>
-            <p>Não possui cadastro? <a href="/cadastro">Clique aqui</a> para se cadastrar.</p>
+            <p>
+              Não possui cadastro? <a href="/cadastro">Clique aqui</a> para se
+              cadastrar.
+            </p>
           </form>
         </div>
       </div>
     </div>
   );
 }
-
 
 export default Login;
