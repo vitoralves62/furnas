@@ -1,7 +1,20 @@
-.modalContainer {
-    background-color: #fff; 
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
+.formItens{
+  position: absolute;
+  top: 40%;
+  left: 37%;
+
+}
+.SearchButton{
+  width: 20%;
+  position: absolute;
+  left: 51%;
+  top: 150%;
+}
+
+.CnpjInput{
+  position: relative;
+  width: 400%;
+  position: absolute;
+  left: 0%;
+  top: 100%;
+}

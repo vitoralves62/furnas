@@ -1,0 +1,21 @@
+.modalContainer {
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  justify-content: center;
+  background: rgb(255, 255, 255);
+  width: 57.5%;
+  height: 80.5%;
+  border-radius: 1%;
+  display: flex;
+  align-items: center;
+  transform: translate(50%, -50%);
+  
+}
+
+.Logo{
+  position: absolute;
+  width: 8%;
+  top: 15%;
+  left: 44.5%;
+}
