@@ -1,20 +1,23 @@
 .formItens{
   position: absolute;
-  top: 40%;
-  left: 37%;
-
+  top: 50%;
+  right: 50%;
+  transform: translate(50%, -50%);
+  align-items: center;
 }
 .SearchButton{
-  width: 20%;
+  width: 30%;
   position: absolute;
-  left: 51%;
   top: 150%;
+  right: 50%;
+  transform: translate(50%, -50%);
 }
 
 .CnpjInput{
   position: relative;
-  width: 400%;
+  width: 350%;
   position: absolute;
-  left: 0%;
-  top: 100%;
+  top: 120%;
+  left: -175%;
+  transform: translate(50%, -50%);
 }

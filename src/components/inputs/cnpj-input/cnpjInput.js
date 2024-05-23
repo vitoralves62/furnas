@@ -3,8 +3,7 @@ import React, { useCallback, useState } from "react";
 import { useForm, Controller } from 'react-hook-form';
 
 
-export default function CnpjInput(){
-    const [CNPJ, setCNPJ] = useState("");
+export default function CnpjInput({value, onChange, errors, name}){
     const {control} = useForm();
 
     const formatCNPJ = (cnpj) => {
@@ -27,31 +26,34 @@ export default function CnpjInput(){
     
         newCNPJ = formatCNPJ(newCNPJ);
     
-        setCNPJ(newCNPJ);
+        onChange(newCNPJ);
     };
 
     return (
         <div className={styles.formContainer}>
             <label>
                 <Controller
-                    render={({ field }) => (
-                    <input
-                        {...field}
-                        type="text"
-                        value={CNPJ}
-                        onChange={handleChangeCNPJ} // Utiliza a função de formatação ao alterar o CNPJ
-                        maxLength={14} // Define o máximo de caracteres permitidos
-                    />
-                    )}
                     control={control}
                     name="CNPJ"
                     rules={{
-                    required: "Campo obrigatório",
-                    pattern: {
-                        value: /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
-                        message: "CNPJ inválido",
-                    },
+                        required: "Campo obrigatório",
+                        pattern: {
+                            value: /(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,
+                            message: "CNPJ inválido",
+                        },
                     }}
+                    render={({ field }) => (
+                    <div>
+                        <input
+                        {...field}
+                        type="text"
+                        value={value}
+                        onChange={handleChangeCNPJ} 
+                        maxLength={14} 
+                        />
+                        {errors[name] && <p className={styles.error}>{errors[name].message}</p>}
+                    </div>
+                    )}
                 />
             </label>
         </div>

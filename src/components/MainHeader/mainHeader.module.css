@@ -10,12 +10,12 @@
   display: flex;
   align-items: center;
   transform: translate(50%, -50%);
-  
 }
 
 .Logo{
   position: absolute;
   width: 8%;
-  top: 15%;
-  left: 44.5%;
+  top: 25%;
+  right: 50%;
+  transform: translate(50%, -50%);
 }
