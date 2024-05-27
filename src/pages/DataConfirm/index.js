@@ -16,19 +16,25 @@ export default function DataConfirmPage(){
 
     const onSubmit = useCallback(async (data) => {
         try {
-            const response = await fetch(
-                'https://apigateway.conectagov.estaleiro.serpro.gov.br/api-cnpj-basica/v2/basica/',
-            {
-                method: 'GET',
-                headers:{
+            // const response = await fetch(
+            //     'https://apigateway.conectagov.estaleiro.serpro.gov.br/api-cnpj-basica/v2/basica/',
+            // {
+            //     method: 'GET',
+            //     headers:{
 
-                }
-            })
-            const responseData = await response.json();
+            //     }
+            // })
+            // const responseData = await response.json();
+            navigate('/login')
         } catch (error) {
             
         }
     })
+
+    const handleCNPJchange = (event) => {
+        setCNPJ(event.target.value)
+        console.log("CNPJ:", event.target.value)
+    }
 
     return (
         <div>
@@ -41,7 +47,7 @@ export default function DataConfirmPage(){
                         <div className={styles.CnpjInput}>
                             <CnpjInput 
                                 value={cnpj} 
-                                onChange={setCNPJ}
+                                onChange={handleCNPJchange}
                                 control={control}
                                 errors={errors}
                             />

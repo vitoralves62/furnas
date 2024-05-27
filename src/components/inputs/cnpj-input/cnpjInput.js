@@ -21,13 +21,13 @@ export default function CnpjInput({value, onChange, errors, name}){
           "$1.$2.$3/$4-$5"
         );
       };
-    const handleChangeCNPJ = (e) => {
-        let newCNPJ = e.target.value;
+    // const handleChangeCNPJ = (e) => {
+    //     let newCNPJ = e.target.value;
     
-        newCNPJ = formatCNPJ(newCNPJ);
+    //     newCNPJ = formatCNPJ(newCNPJ);
     
-        onChange(newCNPJ);
-    };
+    //     onChange(newCNPJ);
+    // };
 
     return (
         <div className={styles.formContainer}>
@@ -48,7 +48,7 @@ export default function CnpjInput({value, onChange, errors, name}){
                         {...field}
                         type="text"
                         value={value}
-                        onChange={handleChangeCNPJ} 
+                        onChange={onChange} 
                         maxLength={14} 
                         />
                         {errors[name] && <p className={styles.error}>{errors[name].message}</p>}
